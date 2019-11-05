@@ -12,11 +12,10 @@ namespace GiTools.Services
             .GetCustomAttribute<AssemblyProductAttribute>()
             .Product;
 
-        private GitHubClient github;
         public async Task CreateCommit(string owner, string repo, string directoryToAdd, string commitText)
         {
             var headMasterRef = "heads/master";
-            github = GetClient("token");
+            var github = GetClient("token");
             var masterReference = await github.Git.Reference.Get(owner, repo, headMasterRef);
             var latestCommit = await GetLatestSHA(owner, repo, headMasterRef);
 
@@ -39,11 +38,12 @@ namespace GiTools.Services
         }
         public async Task CreateRepo(string repoName, bool isPrivate)
         {
-            github = GetClient("token");
+            var github = GetClient("token");
             await github.Repository.Create(new NewRepository(repoName) { Private = isPrivate });
         }
         private async Task<Commit> GetLatestSHA(string owner, string repo, string headMasterRef)
         {
+            var github = GetClient("token");
             var masterReference = await github.Git.Reference.Get(owner, repo, headMasterRef);
             // Get the laster commit of this branch
             return await github.Git.Commit.Get(owner, repo, masterReference.Object.Sha);
