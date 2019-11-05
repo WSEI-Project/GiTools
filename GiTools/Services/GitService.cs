@@ -37,7 +37,11 @@ namespace GiTools.Services
             await github.Git.Reference.Update(owner, repo, headMasterRef, new ReferenceUpdate(commit.Sha));
 
         }
-
+        public async Task CreateRepo(string repoName, bool isPrivate)
+        {
+            github = GetClient("token");
+            await github.Repository.Create(new NewRepository(repoName) { Private = isPrivate });
+        }
         private async Task<Commit> GetLatestSHA(string owner, string repo, string headMasterRef)
         {
             var masterReference = await github.Git.Reference.Get(owner, repo, headMasterRef);
