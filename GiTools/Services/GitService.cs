@@ -11,11 +11,12 @@ namespace GiTools.Services
             .GetEntryAssembly()
             .GetCustomAttribute<AssemblyProductAttribute>()
             .Product;
+
         private GitHubClient github;
-        public async Task CreateCommit(string owner, string repo, string directoryToAdd)
+        public async Task CreateCommit(string owner, string repo, string directoryToAdd, string commitText)
         {
             var headMasterRef = "heads/master";
-            github = GetClient(new ProductHeaderValue(GitHubIdentity), "token");
+            github = GetClient("token");
             var masterReference = await github.Git.Reference.Get(owner, repo, headMasterRef);
             var latestCommit = await GetLatestSHA(owner, repo, headMasterRef);
 
@@ -31,7 +32,7 @@ namespace GiTools.Services
             }
 
             var newTree = await github.Git.Tree.Create(owner, repo, nt);
-            var newCommit = new NewCommit("Commit test with several files", newTree.Sha, masterReference.Object.Sha);
+            var newCommit = new NewCommit(commitText, newTree.Sha, masterReference.Object.Sha);
             var commit = await github.Git.Commit.Create(owner, repo, newCommit);
             await github.Git.Reference.Update(owner, repo, headMasterRef, new ReferenceUpdate(commit.Sha));
 
@@ -44,11 +45,10 @@ namespace GiTools.Services
             return await github.Git.Commit.Get(owner, repo, masterReference.Object.Sha);
         }
 
-        private static GitHubClient GetClient(ProductHeaderValue productInformation,
-            string token)
+        private static GitHubClient GetClient(string token)
         {
             var client = new GitHubClient(new ProductHeaderValue(GitHubIdentity));
-            client.Credentials = new Credentials("personalToken");
+            client.Credentials = new Credentials(token);
 
             return client;
         }
