@@ -13,5 +13,6 @@ namespace GiTools.Services.Interfaces
         Task<IReadOnlyList<RepositoryContributor>> GetContributors(long repoId);
         Task<SearchRepositoryResult> SearchRepositories(SearchRepositoriesRequest req);
         Task<CommitActivity> GetCommitActivity(long repoId);
+        Task DownloadRepo(string owner, string name, string path);
     }
 }

@@ -58,6 +58,12 @@ namespace GiTools.Services
             var github = GetClient("token");
             return await github.Repository.Statistics.GetCommitActivity(repoId);
         }
+        public async Task DownloadRepo(string owner,string name,string path)
+        {
+            var github = GetClient("token");
+            await github.Repository.Content.GetAllContents(owner,name,path);
+        }
+
         private async Task<Commit> GetLatestSHA(string owner, string repo, string headMasterRef)
         {
             var github = GetClient("token");
