@@ -1,4 +1,5 @@
-﻿using Octokit;
+﻿using GiTools.Services.Interfaces;
+using Octokit;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GiTools.Services
 {
-    public class GitService
+    public class GitService : IGitService
     {
         private static readonly string GitHubIdentity = Assembly
             .GetEntryAssembly()
@@ -51,6 +52,11 @@ namespace GiTools.Services
         {
             var github = GetClient("token");
             return await github.Search.SearchRepo(req);
+        }
+        public async Task<CommitActivity> GetCommitActivity(long repoId)
+        {
+            var github = GetClient("token");
+            return await github.Repository.Statistics.GetCommitActivity(repoId);
         }
         private async Task<Commit> GetLatestSHA(string owner, string repo, string headMasterRef)
         {
