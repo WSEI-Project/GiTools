@@ -1,4 +1,5 @@
 ﻿using Octokit;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -40,6 +41,16 @@ namespace GiTools.Services
         {
             var github = GetClient("token");
             await github.Repository.Create(new NewRepository(repoName) { Private = isPrivate });
+        }
+        public async Task<IReadOnlyList<RepositoryContributor>> GetContributors(long repoId)
+        {
+            var github = GetClient("token");
+            return await github.Repository.GetAllContributors(repoId);
+        }
+        public async Task<SearchRepositoryResult> SearchRepositories(SearchRepositoriesRequest req)
+        {
+            var github = GetClient("token");
+            return await github.Search.SearchRepo(req);
         }
         private async Task<Commit> GetLatestSHA(string owner, string repo, string headMasterRef)
         {
