@@ -58,6 +58,11 @@ namespace GiTools.Services
             var github = GetClient("token");
             return await github.Repository.Statistics.GetCommitActivity(repoId);
         }
+        public async Task<CodeFrequency> GetCodeFrequency(long repoId)
+        {
+            var github = GetClient("token");
+            return await github.Repository.Statistics.GetCodeFrequency(repoId);
+        }
         public async Task DownloadRepo(string owner,string name,string path)
         {
             var github = GetClient("token");

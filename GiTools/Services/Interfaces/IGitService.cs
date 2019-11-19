@@ -14,5 +14,6 @@ namespace GiTools.Services.Interfaces
         Task<SearchRepositoryResult> SearchRepositories(SearchRepositoriesRequest req);
         Task<CommitActivity> GetCommitActivity(long repoId);
         Task DownloadRepo(string owner, string name, string path);
+        Task<CodeFrequency> GetCodeFrequency(long repoId);
     }
 }
