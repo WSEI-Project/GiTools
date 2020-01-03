@@ -17,7 +17,7 @@ namespace GiTools.Views
     /// </summary>
     public partial class Home : Window
     {
-        public Home()
+        public Home(string token)
         {
             InitializeComponent();
         }

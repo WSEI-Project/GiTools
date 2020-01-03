@@ -30,7 +30,7 @@ namespace GiTools
         {
             //pobierasz tekst z inputa
             //przechodzisz do następnego widoku, przekazując tam token
-            Home home= new Home();
+            Home home= new Home(TokenInputBox.Text);
             home.Show();
             this.Close();
         }

@@ -8,7 +8,7 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Button x:Name="button1" Content="Przycisk" HorizontalAlignment="Center" Margin="0,217,0,0" VerticalAlignment="Top" Click="Button_Click"/>
-        <TextBox HorizontalAlignment="Center" Margin="0,179,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged"/>
+        <TextBox HorizontalAlignment="Center" Margin="0,179,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Name="TokenInputBox"/>
 
     </Grid>
 </Window>

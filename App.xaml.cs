@@ -18,10 +18,6 @@ namespace GiTools
         {
             IUnityContainer container = new UnityContainer();
             container.RegisterType<IGitService, GitService>();
-
-            //Home homeWindow = container.Resolve<Home>();
-           // MainWindow mainWindow = container.Resolve<MainWindow>();
-            //mainWindow.Show();
         }
     }
 }
