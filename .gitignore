@@ -8,3 +8,4 @@ GiToolsTests/.vs
 GiToolsTests/obj
 GiToolsTests/bin
 GiToolsTests/Token.cs
+GiToolsTests/GitTestRepository.cs
