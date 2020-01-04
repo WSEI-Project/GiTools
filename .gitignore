@@ -4,3 +4,7 @@ GiTools/bin
 .vs
 obj
 bin
+GiToolsTests/.vs
+GiToolsTests/obj
+GiToolsTests/bin
+GiToolsTests/Token.cs
