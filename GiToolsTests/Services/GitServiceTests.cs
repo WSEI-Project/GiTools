@@ -9,8 +9,43 @@ namespace GiToolsTests.Services
         public async Task CreateCommit(string owner, string repo, string directoryToAdd, string commitText)
         public async Task CreateRepo(string repoName, bool isPrivate)
         public async Task<SearchRepositoryResult> SearchRepositories(SearchRepositoriesRequest req)
-        public async Task<CommitActivity> GetCommitActivity(long repoId)
         */
+        #region GetCommitActivity
+            [Fact]
+        public async void TestGetCommitActivity()
+        {
+            var git = new GitService(GitTestsToken.MinimalPermissions);
+            var activity = await git.GetCommitActivity(GitTestRepository.Public);
+            Assert.IsType<Octokit.CommitActivity>(activity);
+        }
+        [Fact]
+        public async void TestGetCommitActivityException()
+        {
+            //incorrect repo
+            long incorrectRepoId = -1;
+            var git = new GitService(GitTestsToken.MinimalPermissions);
+            await Assert.ThrowsAsync<Octokit.NotFoundException>(async delegate ()
+            {
+                await git.GetCommitActivity(incorrectRepoId);
+            });
+        }
+        [Fact]
+        public async void TestGetCommitActivityPrivateRepoAccessible()
+        {
+            var git = new GitService(GitTestsToken.FullPermissions);
+            var frequency = await git.GetCommitActivity(GitTestRepository.Private);
+            Assert.IsType<Octokit.CommitActivity>(frequency);
+        }
+        [Fact]
+        public async void TestGetCommitActivityPrivateRepoNotAccessible()
+        {
+            var git = new GitService(GitTestsToken.MinimalPermissions);
+            await Assert.ThrowsAsync<Octokit.NotFoundException>(async delegate ()
+            {
+                await git.GetCommitActivity(GitTestRepository.Private);
+            });
+        }
+        #endregion
         #region GetRepoId
         [Fact]
         public async void TestGetRepoId()
