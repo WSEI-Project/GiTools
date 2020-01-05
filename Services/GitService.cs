@@ -18,12 +18,12 @@ namespace GiTools.Services
         {
             _token = token;
         }
-        public async Task CreateCommit(string owner, string repo, string directoryToAdd, string commitText)
+        public async Task CreateCommit(long repoId, string directoryToAdd, string commitText)
         {
             var headMasterRef = "heads/master";
             var github = GetClient();
-            var masterReference = await github.Git.Reference.Get(owner, repo, headMasterRef);
-            var latestCommit = await GetLatestSHA(owner, repo, headMasterRef);
+            var masterReference = await github.Git.Reference.Get(repoId, headMasterRef);
+            var latestCommit = await GetLatestSHA(repoId, headMasterRef);
 
             var nt = new NewTree { BaseTree = latestCommit.Tree.Sha };
             string[] filePaths = Directory.GetFiles(string.Format(@"{0}\", directoryToAdd));
@@ -36,10 +36,10 @@ namespace GiTools.Services
                 nt.Tree.Add(newTreeItem);
             }
 
-            var newTree = await github.Git.Tree.Create(owner, repo, nt);
+            var newTree = await github.Git.Tree.Create(repoId, nt);
             var newCommit = new NewCommit(commitText, newTree.Sha, masterReference.Object.Sha);
-            var commit = await github.Git.Commit.Create(owner, repo, newCommit);
-            await github.Git.Reference.Update(owner, repo, headMasterRef, new ReferenceUpdate(commit.Sha));
+            var commit = await github.Git.Commit.Create(repoId, newCommit);
+            await github.Git.Reference.Update(repoId, headMasterRef, new ReferenceUpdate(commit.Sha));
 
         }
         public async Task CreateRepo(string repoName, bool isPrivate)
@@ -67,18 +67,24 @@ namespace GiTools.Services
             var github = GetClient();
             return await github.Repository.Statistics.GetCodeFrequency(repoId);
         }
-        public async Task DownloadRepo(string owner,string name,string path)
+        public async Task DownloadRepo(long repoId, string path)
         {
             var github = GetClient();
-            await github.Repository.Content.GetAllContents(owner,name,path);
+            await github.Repository.Content.GetAllContents(repoId, path);
         }
-
-        private async Task<Commit> GetLatestSHA(string owner, string repo, string headMasterRef)
+        public async Task<long> GetRepoId(string url)
         {
             var github = GetClient();
-            var masterReference = await github.Git.Reference.Get(owner, repo, headMasterRef);
+            string user = url.Split("/")[3];
+            string repoName = url.Split("/")[4];
+            return (await github.Repository.Get(user, repoName)).Id;
+        }
+        private async Task<Commit> GetLatestSHA(long repoId, string headMasterRef)
+        {
+            var github = GetClient();
+            var masterReference = await github.Git.Reference.Get(repoId, headMasterRef);
             // Get the laster commit of this branch
-            return await github.Git.Commit.Get(owner, repo, masterReference.Object.Sha);
+            return await github.Git.Commit.Get(repoId, masterReference.Object.Sha);
         }
 
         private static GitHubClient GetClient()
