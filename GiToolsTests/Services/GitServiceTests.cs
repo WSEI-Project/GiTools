@@ -11,8 +11,38 @@ namespace GiToolsTests.Services
         public async Task<SearchRepositoryResult> SearchRepositories(SearchRepositoriesRequest req)
         public async Task<CommitActivity> GetCommitActivity(long repoId)
         */
+        #region GetRepoId
+        [Fact]
+        public async void TestGetRepoId()
+        {
+            var git = new GitService(GitTestsToken.MinimalPermissions);
+            Assert.Equal(GitTestRepository.Public,await git.GetRepoId(GitTestRepository.PublicUrl));
+            Assert.Equal(GitTestRepository.Public, await git.GetRepoId(GitTestRepository.PublicCloneUrl));
+        }
+        [Fact]
+        public async void TestGetRepoIdPrivateRepoAccessible()
+        {
+            var git = new GitService(GitTestsToken.FullPermissions);
+            Assert.Equal(GitTestRepository.Private, await git.GetRepoId(GitTestRepository.PrivateUrl));
+            Assert.Equal(GitTestRepository.Private, await git.GetRepoId(GitTestRepository.PrivateCloneUrl));
+        }
+        [Fact]
+        public async void TestGetRepoIdPrivateRepoNotAccessible()
+        {
+            var git = new GitService(GitTestsToken.MinimalPermissions);
+            await Assert.ThrowsAsync<Octokit.NotFoundException>(async delegate ()
+            {
+                Assert.Equal(GitTestRepository.Private, await git.GetRepoId(GitTestRepository.PrivateUrl));
+            });
+            await Assert.ThrowsAsync<Octokit.NotFoundException>(async delegate ()
+            {
+                Assert.Equal(GitTestRepository.Private, await git.GetRepoId(GitTestRepository.PrivateCloneUrl));
+            });
+            
+        }
+        #endregion
         #region DownloadRepo
-            //not implemented yet
+        //not implemented yet
         #endregion
         #region CodeFrequency
         [Fact]
