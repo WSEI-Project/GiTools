@@ -77,6 +77,7 @@ namespace GiTools.Services
             var github = GetClient();
             string user = url.Split("/")[3];
             string repoName = url.Split("/")[4];
+            if (repoName.EndsWith(".git")) repoName = repoName.Replace(".git", "");
             return (await github.Repository.Get(user, repoName)).Id;
         }
         private async Task<Commit> GetLatestSHA(long repoId, string headMasterRef)
