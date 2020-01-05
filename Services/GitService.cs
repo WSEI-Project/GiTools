@@ -2,6 +2,7 @@
 using Octokit;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -71,7 +72,15 @@ namespace GiTools.Services
         public async Task DownloadRepo(long repoId, string path)
         {
             var github = GetClient();
-            await github.Repository.Content.GetAllContents(repoId, path);
+            if (!path.EndsWith("/"))
+            {
+                path += "/";
+            }
+            var zip = await github.Repository.Content.GetArchive(repoId,ArchiveFormat.Zipball);
+            File.WriteAllBytes(path, zip);
+            string repoName = (await github.Repository.Get(repoId)).Name;
+            string pathWithRepoName = string.Format("{0}{1}",path,repoName);
+            ZipFile.ExtractToDirectory(pathWithRepoName, path);
         }
         public async Task<long> GetRepoId(string url)
         {
