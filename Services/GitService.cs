@@ -42,10 +42,11 @@ namespace GiTools.Services
             await github.Git.Reference.Update(repoId, headMasterRef, new ReferenceUpdate(commit.Sha));
 
         }
-        public async Task CreateRepo(string repoName, bool isPrivate)
+        public async Task<long> CreateRepo(string repoName, bool isPrivate)
         {
             var github = GetClient();
-            await github.Repository.Create(new NewRepository(repoName) { Private = isPrivate });
+            var repo = await github.Repository.Create(new NewRepository(repoName) { Private = isPrivate });
+            return repo.Id;
         }
         public async Task<IReadOnlyList<RepositoryContributor>> GetContributors(long repoId)
         {
