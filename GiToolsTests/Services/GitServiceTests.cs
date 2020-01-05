@@ -10,8 +10,17 @@ namespace GiToolsTests.Services
         public async Task CreateRepo(string repoName, bool isPrivate)
         public async Task<SearchRepositoryResult> SearchRepositories(SearchRepositoriesRequest req)
         */
+        #region SearchRepositories
+        [Fact]
+        public async void TestSearchRepositories()
+        {
+            var git = new GitService(GitTestsToken.MinimalPermissions);
+            var req = new Octokit.SearchRepositoriesRequest("TestRepo");
+            Assert.IsType<Octokit.SearchRepositoryResult>(await git.SearchRepositories(req));
+        }
+        #endregion
         #region GetCommitActivity
-            [Fact]
+        [Fact]
         public async void TestGetCommitActivity()
         {
             var git = new GitService(GitTestsToken.MinimalPermissions);
