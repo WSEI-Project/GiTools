@@ -8,12 +8,16 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\**" />
+    <Compile Remove="GiToolsTests\**" />
     <Compile Remove="Models\**" />
     <EmbeddedResource Remove="Controllers\**" />
+    <EmbeddedResource Remove="GiToolsTests\**" />
     <EmbeddedResource Remove="Models\**" />
     <None Remove="Controllers\**" />
+    <None Remove="GiToolsTests\**" />
     <None Remove="Models\**" />
     <Page Remove="Controllers\**" />
+    <Page Remove="GiToolsTests\**" />
     <Page Remove="Models\**" />
   </ItemGroup>
 
