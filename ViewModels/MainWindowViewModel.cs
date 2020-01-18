@@ -7,10 +7,11 @@ namespace GiTools.ViewModels
 {
     public class MainWindowViewModel
     {
-        public GitService _gitService;
+        public  GitService _gitService;
         MainWindowViewModel(GitService gitService)
         {
             _gitService = gitService;
-        }
+        }    
+
     }
 }

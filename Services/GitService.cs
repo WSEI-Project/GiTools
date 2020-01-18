@@ -65,7 +65,7 @@ namespace GiTools.Services
             return await github.Repository.Statistics.GetCommitActivity(repoId);
         }
         public async Task<CodeFrequency> GetCodeFrequency(long repoId)
-        {
+        {   
             var github = GetClient();
             return await github.Repository.Statistics.GetCodeFrequency(repoId);
         }

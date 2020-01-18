@@ -4,11 +4,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GiTools"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d" Height="600" Width="400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None" Background="#FF410A66">
     <Grid>
-        <Button x:Name="button1" Content="Przycisk" HorizontalAlignment="Center" Margin="0,217,0,0" VerticalAlignment="Top" Click="Button_Click"/>
-        <TextBox HorizontalAlignment="Center" Margin="0,179,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Name="TokenInputBox"/>
-
+        <StackPanel Margin="50">
+            <Image Source="/ViewModels/logo.png" Width="200" Height="96"/>
+            <Border Background="White" Margin="10 20" CornerRadius="5">
+                <StackPanel Margin="25">
+                    <TextBox Name ="TokenInputBox" Margin="15" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Hint="Paste your Github token's here"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button x:Name="ButtonSignUp" Margin="15 50" Content="Go to your repo" Click="Button_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </StackPanel>
     </Grid>
 </Window>

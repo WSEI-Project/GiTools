@@ -1,5 +1,6 @@
 ﻿using GiTools.Services;
 using GiTools.ViewModels;
+using GiTools.Views;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -25,16 +26,27 @@ namespace GiTools.Views
         [Dependency]
         public MainWindowViewModel ViewModel
         {
+        
             set { this.GitService = value._gitService; }
         }
         public Home(string token)
         {
-            
             InitializeComponent();
+            GitService git = new GitService(token);
+            
         }
-        public async Task CreateRepository(string name)
+
+        
+        private void BtnCreateRepo_Click (object sender, RoutedEventArgs e)
         {
-            await GitService.CreateRepo(name, false);
+            CreateRepo repo = new CreateRepo();
+            repo.Show();
         }
+
+        private void Search_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Repository has been downloaded");
+        }
+
     }
 }
