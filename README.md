@@ -22,3 +22,4 @@ Token mo¿na wygenerowaæ tutaj: https://github.com/settings/tokens
 ### Autorzy
 Grzegorz Ociepka
 Mateusz Hanzel
+Przemys³aw Bartosz

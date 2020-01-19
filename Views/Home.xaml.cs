@@ -32,20 +32,21 @@ namespace GiTools.Views
         public Home(string token)
         {
             InitializeComponent();
-            GitService git = new GitService(token);
-            
+            GitService = new GitService(token);
         }
 
         
         private void BtnCreateRepo_Click (object sender, RoutedEventArgs e)
         {
-            CreateRepo repo = new CreateRepo();
+            //tu jak widac przekazuje ten stworzony gitService do konstruktora widoku CreateRepo
+            CreateRepo repo = new CreateRepo(GitService);
             repo.Show();
         }
 
         private void Search_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Repository has been downloaded");
+            SearchRepo searchRepo = new SearchRepo();
+            searchRepo.Show();
         }
 
     }

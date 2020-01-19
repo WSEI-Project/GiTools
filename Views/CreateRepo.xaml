@@ -13,7 +13,6 @@
                 <StackPanel Margin="15">
                     <StackPanel HorizontalAlignment="Center" >
                         <TextBox Name ="RepoNameInputBox"  Margin="15 20" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Hint="Repository name" />
-                        <CheckBox x:Name="Public" Content="Public repository" />
                         <CheckBox x:Name="Private" Content="Private repository"/>
                         <Button x:Name="ButtonSignUp2" Margin="15 10" Content="Create Repository" Click="Crte_ClickAsync" />
                     </StackPanel>
