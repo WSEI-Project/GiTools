@@ -45,7 +45,7 @@ namespace GiTools.Views
 
         private void Search_Click(object sender, RoutedEventArgs e)
         {
-            SearchRepo searchRepo = new SearchRepo();
+            SearchRepo searchRepo = new SearchRepo(GitService);
             searchRepo.Show();
         }
 

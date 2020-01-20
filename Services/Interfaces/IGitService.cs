@@ -15,5 +15,6 @@ namespace GiTools.Services.Interfaces
         Task<CommitActivity> GetCommitActivity(long repoId);
         Task DownloadRepo(long repoId, string path);
         Task<CodeFrequency> GetCodeFrequency(long repoId);
+        Task<IReadOnlyList<Repository>> GetUsersRepo();
     }
 }

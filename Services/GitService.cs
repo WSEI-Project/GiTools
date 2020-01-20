@@ -69,6 +69,11 @@ namespace GiTools.Services
             var github = GetClient();
             return await github.Repository.Statistics.GetCodeFrequency(repoId);
         }
+        public async Task<IReadOnlyList<Repository>> GetUsersRepo()
+        {
+            var github = GetClient();
+            return await github.Repository.GetAllForCurrent();
+        }
         public async Task DownloadRepo(long repoId, string path)
         {
             var github = GetClient();
