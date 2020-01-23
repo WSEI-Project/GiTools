@@ -31,9 +31,9 @@ namespace GiTools.Services
 
             foreach (var filePath in filePaths)
             {
-                var linesOfCode =  await File.ReadAllLinesAsync(filePath);
-                
-                var newTreeItem = new NewTreeItem { Mode = "100644", Type = TreeType.Blob, Content = linesOfCode.ToString() , Path = filePath };
+                var linesOfCode = await File.ReadAllLinesAsync(filePath);
+
+                var newTreeItem = new NewTreeItem { Mode = "100644", Type = TreeType.Blob, Content = linesOfCode.ToString(), Path = filePath };
                 nt.Tree.Add(newTreeItem);
             }
 
@@ -65,7 +65,7 @@ namespace GiTools.Services
             return await github.Repository.Statistics.GetCommitActivity(repoId);
         }
         public async Task<CodeFrequency> GetCodeFrequency(long repoId)
-        {   
+        {
             var github = GetClient();
             return await github.Repository.Statistics.GetCodeFrequency(repoId);
         }
@@ -77,14 +77,15 @@ namespace GiTools.Services
         public async Task DownloadRepo(long repoId, string path)
         {
             var github = GetClient();
-            if (!path.EndsWith("/"))
+            if (!path.EndsWith("\\"))
             {
-                path += "/";
+                path += "\\";
             }
-            var zip = await github.Repository.Content.GetArchive(repoId,ArchiveFormat.Zipball);
-            File.WriteAllBytes(path, zip);
+            var zip = await github.Repository.Content.GetArchive(repoId, ArchiveFormat.Zipball);
             string repoName = (await github.Repository.Get(repoId)).Name;
-            string pathWithRepoName = string.Format("{0}{1}",path,repoName);
+            File.WriteAllBytes(path + repoName, zip);
+
+            string pathWithRepoName = string.Format("{0}{1}", path, repoName);
             ZipFile.ExtractToDirectory(pathWithRepoName, path);
         }
         public async Task<long> GetRepoId(string url)
