@@ -24,21 +24,31 @@ namespace GiTools.Views
         {
             InitializeComponent();
             this.git = git;
-            //Tu masz konstruktor, do którego wrzucasz ten gitservice, a który jest 
-            // stworzony w Home.xaml.cs. Przypisujesz do pola git, ktore jest tam wyzej
-            // i mozesz sobie z tego caly czas korzystac. analogicznie we wszystkich widokach
+            CloseButton.Click += (s, e) => Close();
+
         }
-  
-       private async void Crte_ClickAsync(object sender, RoutedEventArgs e)
-       {
-           if (string.IsNullOrEmpty(RepoNameInputBox.Text))
-               MessageBox.Show("Repository name is empty");
-           else
-           {
+        #region Window : Moving
+        private void GridOfWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var move = sender as System.Windows.Controls.Grid;
+            var win = Window.GetWindow(move);
+            win.DragMove();
+        }
+        #endregion
+
+        #region Window : Crte_Click
+        private async void Crte_ClickAsync(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(RepoNameInputBox.Text))
+                MessageBox.Show("Repository name is empty");
+            else
+            {
                 long createdRepoId = await git.CreateRepo(RepoNameInputBox.Text, (bool)Private.IsChecked ? true : false);
                 MessageBox.Show(string.Format("Repository has beed created with id {0}", createdRepoId));
-           }
-       }
-       
+            }
+        }
+        #endregion
+
+
     }
 }
