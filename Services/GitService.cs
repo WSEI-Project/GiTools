@@ -86,7 +86,9 @@ namespace GiTools.Services
             File.WriteAllBytes(path + repoName, zip);
 
             string pathWithRepoName = string.Format("{0}{1}", path, repoName);
+         
             ZipFile.ExtractToDirectory(pathWithRepoName, path);
+            System.IO.File.Delete(pathWithRepoName);
         }
         public async Task<long> GetRepoId(string url)
         {
