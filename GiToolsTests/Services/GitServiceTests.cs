@@ -11,6 +11,7 @@ namespace GiToolsTests.Services
             minimalGit = new GitService(GitTestsToken.MinimalPermissions);
             fullGit = new GitService(GitTestsToken.FullPermissions);
         }
+
         /*
         public GitService(string token)
         public async Task CreateCommit(string owner, string repo, string directoryToAdd, string commitText)
@@ -140,6 +141,7 @@ namespace GiToolsTests.Services
         public async void TestGetContributorsPrivateRepoAccessible()
         {
             var contributors = await fullGit.GetContributors(GitTestRepository.Private);
+
             Assert.True(contributors.Count > 0);
         }
         [Fact]
@@ -148,6 +150,7 @@ namespace GiToolsTests.Services
             await Assert.ThrowsAsync<Octokit.NotFoundException>(async delegate ()
             {
                 await minimalGit.GetContributors(GitTestRepository.Private);
+
             });
         }
         #endregion
