@@ -1,5 +1,6 @@
 ﻿using GiTools.Services.Interfaces;
 using Octokit;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -97,6 +98,18 @@ namespace GiTools.Services
             string repoName = url.Split("/")[4];
             if (repoName.EndsWith(".git")) repoName = repoName.Replace(".git", "");
             return (await github.Repository.Get(user, repoName)).Id;
+        }
+        public bool AuthenticateUser(string token)
+        {
+            if(token.Length > 35 && token.Length < 55)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+           
         }
         private async Task<Commit> GetLatestSHA(long repoId, string headMasterRef)
         {
