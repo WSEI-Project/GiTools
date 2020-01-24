@@ -1,18 +1,10 @@
 ﻿using GiTools.Services;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using Octokit;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace GiTools.Views
 {
@@ -24,7 +16,7 @@ namespace GiTools.Views
         GitService git;
         List<Repo> dataTableData;
 
-
+        private readonly string savingPath = "C:\\Projects";
         public UserRepo(GitService git)
         {
             InitializeComponent();
@@ -65,9 +57,21 @@ namespace GiTools.Views
         private async void DownloadRepo_Click(object sender, RoutedEventArgs e)
         {
             var myValue = ((Button)sender).Tag.ToString();
-
-            await git.DownloadRepo(long.Parse(myValue), "C:\\Projekty");
-            MessageBox.Show("Repository has been downloaded");
+            if(!System.IO.Directory.Exists(savingPath))
+            {
+                try
+                {
+                    System.IO.Directory.CreateDirectory(savingPath);
+                    await git.DownloadRepo(long.Parse(myValue), savingPath);
+                    MessageBox.Show($"Repository has been downloaded to {savingPath}");
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show($"Repository could not be saved due to error: {ex.Message}");
+                }
+                
+            }
+  
         }
        
         private async void ShowContributors_Click(object sender, RoutedEventArgs e)
