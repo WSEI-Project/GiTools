@@ -4,6 +4,13 @@ namespace GiToolsTests.Services
 {
     public class GitServiceTests
     {
+        private GitService fullGit;
+        private GitService minimalGit;
+        public GitServiceTests()
+        {
+            minimalGit = new GitService(GitTestsToken.MinimalPermissions);
+            fullGit = new GitService(GitTestsToken.FullPermissions);
+        }
         /*
         public GitService(string token)
         public async Task CreateCommit(string owner, string repo, string directoryToAdd, string commitText)
@@ -14,17 +21,15 @@ namespace GiToolsTests.Services
         [Fact]
         public async void TestSearchRepositories()
         {
-            var git = new GitService(GitTestsToken.MinimalPermissions);
             var req = new Octokit.SearchRepositoriesRequest("TestRepo");
-            Assert.IsType<Octokit.SearchRepositoryResult>(await git.SearchRepositories(req));
+            Assert.IsType<Octokit.SearchRepositoryResult>(await minimalGit.SearchRepositories(req));
         }
         #endregion
         #region GetCommitActivity
         [Fact]
         public async void TestGetCommitActivity()
         {
-            var git = new GitService(GitTestsToken.MinimalPermissions);
-            var activity = await git.GetCommitActivity(GitTestRepository.Public);
+            var activity = await minimalGit.GetCommitActivity(GitTestRepository.Public);
             Assert.IsType<Octokit.CommitActivity>(activity);
         }
         [Fact]
@@ -32,26 +37,23 @@ namespace GiToolsTests.Services
         {
             //incorrect repo
             long incorrectRepoId = -1;
-            var git = new GitService(GitTestsToken.MinimalPermissions);
             await Assert.ThrowsAsync<Octokit.NotFoundException>(async delegate ()
             {
-                await git.GetCommitActivity(incorrectRepoId);
+                await minimalGit.GetCommitActivity(incorrectRepoId);
             });
         }
         [Fact]
         public async void TestGetCommitActivityPrivateRepoAccessible()
         {
-            var git = new GitService(GitTestsToken.FullPermissions);
-            var frequency = await git.GetCommitActivity(GitTestRepository.Private);
+            var frequency = await fullGit.GetCommitActivity(GitTestRepository.Private);
             Assert.IsType<Octokit.CommitActivity>(frequency);
         }
         [Fact]
         public async void TestGetCommitActivityPrivateRepoNotAccessible()
         {
-            var git = new GitService(GitTestsToken.MinimalPermissions);
             await Assert.ThrowsAsync<Octokit.NotFoundException>(async delegate ()
             {
-                await git.GetCommitActivity(GitTestRepository.Private);
+                await minimalGit.GetCommitActivity(GitTestRepository.Private);
             });
         }
         #endregion
@@ -59,28 +61,25 @@ namespace GiToolsTests.Services
         [Fact]
         public async void TestGetRepoId()
         {
-            var git = new GitService(GitTestsToken.MinimalPermissions);
-            Assert.Equal(GitTestRepository.Public,await git.GetRepoId(GitTestRepository.PublicUrl));
-            Assert.Equal(GitTestRepository.Public, await git.GetRepoId(GitTestRepository.PublicCloneUrl));
+            Assert.Equal(GitTestRepository.Public,await minimalGit.GetRepoId(GitTestRepository.PublicUrl));
+            Assert.Equal(GitTestRepository.Public, await minimalGit.GetRepoId(GitTestRepository.PublicCloneUrl));
         }
         [Fact]
         public async void TestGetRepoIdPrivateRepoAccessible()
         {
-            var git = new GitService(GitTestsToken.FullPermissions);
-            Assert.Equal(GitTestRepository.Private, await git.GetRepoId(GitTestRepository.PrivateUrl));
-            Assert.Equal(GitTestRepository.Private, await git.GetRepoId(GitTestRepository.PrivateCloneUrl));
+            Assert.Equal(GitTestRepository.Private, await fullGit.GetRepoId(GitTestRepository.PrivateUrl));
+            Assert.Equal(GitTestRepository.Private, await fullGit.GetRepoId(GitTestRepository.PrivateCloneUrl));
         }
         [Fact]
         public async void TestGetRepoIdPrivateRepoNotAccessible()
         {
-            var git = new GitService(GitTestsToken.MinimalPermissions);
             await Assert.ThrowsAsync<Octokit.NotFoundException>(async delegate ()
             {
-                Assert.Equal(GitTestRepository.Private, await git.GetRepoId(GitTestRepository.PrivateUrl));
+                Assert.Equal(GitTestRepository.Private, await minimalGit.GetRepoId(GitTestRepository.PrivateUrl));
             });
             await Assert.ThrowsAsync<Octokit.NotFoundException>(async delegate ()
             {
-                Assert.Equal(GitTestRepository.Private, await git.GetRepoId(GitTestRepository.PrivateCloneUrl));
+                Assert.Equal(GitTestRepository.Private, await minimalGit.GetRepoId(GitTestRepository.PrivateCloneUrl));
             });
             
         }
@@ -92,8 +91,7 @@ namespace GiToolsTests.Services
         [Fact]
         public async void TestGetCodeFrequency()
         {
-            var git = new GitService(GitTestsToken.MinimalPermissions);
-            var frequency = await git.GetCodeFrequency(GitTestRepository.Public);
+            var frequency = await minimalGit.GetCodeFrequency(GitTestRepository.Public);
             Assert.IsType<Octokit.CodeFrequency>(frequency);
         }
         [Fact]
@@ -101,26 +99,23 @@ namespace GiToolsTests.Services
         {
             //incorrect repo
             long incorrectRepoId = -1;
-            var git = new GitService(GitTestsToken.MinimalPermissions);
             await Assert.ThrowsAsync<Octokit.NotFoundException>(async delegate ()
             {
-                await git.GetCodeFrequency(incorrectRepoId);
+                await minimalGit.GetCodeFrequency(incorrectRepoId);
             });
         }
         [Fact]
         public async void TestGetCodeFrequencyPrivateRepoAccessible()
         {
-            var git = new GitService(GitTestsToken.FullPermissions);
-            var frequency = await git.GetCodeFrequency(GitTestRepository.Private);
+            var frequency = await fullGit.GetCodeFrequency(GitTestRepository.Private);
             Assert.IsType<Octokit.CodeFrequency>(frequency);
         }
         [Fact]
         public async void TestGetCodeFrequencyPrivateRepoNotAccessible()
         {
-            var git = new GitService(GitTestsToken.MinimalPermissions);
             await Assert.ThrowsAsync<Octokit.NotFoundException>(async delegate ()
             {
-                await git.GetCodeFrequency(GitTestRepository.Private);
+                await minimalGit.GetCodeFrequency(GitTestRepository.Private);
             });
         }
         #endregion
@@ -128,8 +123,7 @@ namespace GiToolsTests.Services
         [Fact]
         public async void TestGetContributors()
         {
-            var git = new GitService(GitTestsToken.MinimalPermissions);
-            var contributors = await git.GetContributors(GitTestRepository.Public);
+            var contributors = await minimalGit.GetContributors(GitTestRepository.Public);
             Assert.True(contributors.Count > 0);
         }
         [Fact]
@@ -137,26 +131,23 @@ namespace GiToolsTests.Services
         {
             //incorrect repo
             long incorrectRepoId = -1;
-            var git = new GitService(GitTestsToken.MinimalPermissions);
             await Assert.ThrowsAsync<Octokit.NotFoundException>(async delegate ()
             {
-                await git.GetContributors(incorrectRepoId);
+                await minimalGit.GetContributors(incorrectRepoId);
             });
         }
         [Fact]
         public async void TestGetContributorsPrivateRepoAccessible()
         {
-            var git = new GitService(GitTestsToken.FullPermissions);
-            var contributors = await git.GetContributors(GitTestRepository.Private);
+            var contributors = await fullGit.GetContributors(GitTestRepository.Private);
             Assert.True(contributors.Count > 0);
         }
         [Fact]
         public async void TestGetContributorsPrivateRepoNotAccessible()
         {
-            var git = new GitService(GitTestsToken.MinimalPermissions);
             await Assert.ThrowsAsync<Octokit.NotFoundException>(async delegate ()
             {
-                await git.GetContributors(GitTestRepository.Private);
+                await minimalGit.GetContributors(GitTestRepository.Private);
             });
         }
         #endregion
