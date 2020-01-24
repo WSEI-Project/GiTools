@@ -25,7 +25,8 @@ namespace GiTools
         }
         public void Token_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("http://www.YouTube.com");
+            
+            System.Diagnostics.Process.Start(@"C:\Program Files\Firefox Developer Edition\Firefox.exe", "https://github.com/settings/tokens");
         }
 
         #region Window: Moving
