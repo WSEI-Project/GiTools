@@ -16,5 +16,6 @@ namespace GiTools.Services.Interfaces
         Task DownloadRepo(long repoId, string path);
         Task<CodeFrequency> GetCodeFrequency(long repoId);
         Task<IReadOnlyList<Repository>> GetUsersRepo();
+        bool AuthenticateUser(string token);
     }
 }

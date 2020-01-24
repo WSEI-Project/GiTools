@@ -47,16 +47,22 @@ namespace GiTools
                 MessageBox.Show("No token");
             else
             {
+
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri("https://api.github.com");
                 var token = TokenInputBox.Text;
-                client.DefaultRequestHeaders.UserAgent.Add(new System.Net.Http.Headers.ProductInfoHeaderValue("AppName", "1.0"));
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Token", token);
-
-                Home home = new Home(token);
-                home.Show();
-                this.Close();
+                var service = new GitService(token);
+                if (service.AuthenticateUser(token))
+                {
+                    Home home = new Home(token);
+                    home.Show();
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Bad Token");
+                }
+            
             }
         }
         #endregion
