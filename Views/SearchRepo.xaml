@@ -28,8 +28,10 @@
                 <StackPanel Margin="25">
                     <StackPanel Width="600" HorizontalAlignment="Center">
                         <CheckBox Name="Archieved" Content="Archieved"/>
-                        <DatePicker Name="DateFrom" />
-                        <DatePicker Name="DateTo"/>
+                        <TextBlock Margin="0 5 0 5" Text="Created after"></TextBlock>
+                        <DatePicker Name="DateFrom" Cursor="Hand" Text="Date From"  />
+                        <TextBlock Margin="0 5 0 5" Text="Created before"></TextBlock>
+                        <DatePicker Name="DateTo" Text="Date to"/>
                         <TextBox Name="StarsFrom" materialDesign:HintAssist.Hint="Stars from"/>
                         <TextBox Name="StarsTo" materialDesign:HintAssist.Hint="Stars to"/>
                         <TextBox Name="Owner" materialDesign:HintAssist.Hint="Owner"/>
