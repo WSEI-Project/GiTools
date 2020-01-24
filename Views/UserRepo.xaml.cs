@@ -24,7 +24,7 @@ namespace GiTools.Views
         GitService git;
         List<Repo> dataTableData;
 
-        private readonly string savingPath = "C:\\nowrite\\Projects";
+        private readonly string savingPath = "C:\\Projects";
         public UserRepo(GitService git)
         {
             InitializeComponent();
