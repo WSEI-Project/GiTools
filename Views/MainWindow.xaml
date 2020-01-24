@@ -6,14 +6,24 @@
         xmlns:local="clr-namespace:GiTools"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d" Height="600" Width="400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None" Background="#FF410A66">
-    <Grid>
-        <StackPanel Margin="50">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="35"/>
+    </WindowChrome.WindowChrome>
+    <Grid x:Name="GridOfWindow" MouseLeftButtonDown="GridOfWindow_MouseLeftButtonDown">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="71*"/>
+            <ColumnDefinition Width="14*"/>
+            <ColumnDefinition Width="315*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel WindowChrome.IsHitTestVisibleInChrome="True" Margin="50,50,16,50" Grid.ColumnSpan="3">
+            <Button Height="35" Width="35" Content="x" Padding="0" x:Name="CloseButton"/>
             <Image Source="/ViewModels/logo.png" Width="200" Height="96"/>
             <Border Background="White" Margin="10 20" CornerRadius="5">
                 <StackPanel Margin="25">
                     <TextBox Name ="TokenInputBox" Margin="15" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Hint="Paste your Github token's here"/>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <StackPanel  HorizontalAlignment="Center">
                         <Button x:Name="ButtonSignUp" Margin="15 50" Content="Go to your repo" Click="Button_Click"/>
+                        <Button x:Name="ButtonGetToken" Content="Click here to get your token" Click="Token_Click"/>
                     </StackPanel>
                 </StackPanel>
             </Border>
