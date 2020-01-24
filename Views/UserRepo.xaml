@@ -1,0 +1,54 @@
+﻿<Window x:Class="GiTools.Views.UserRepo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GiTools.Views"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d" Height="800" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None" Background="#FF410A66" IsEnabled="True">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="35"/>
+    </WindowChrome.WindowChrome>
+    <Grid x:Name="GridOfWindow" MouseLeftButtonDown="GridOfWindow_MouseLeftButtonDown">
+        <StackPanel WindowChrome.IsHitTestVisibleInChrome="True" Width="600" Margin="50">
+            <Button Height="35" Width="35" Content="x" Padding="0" x:Name="CloseButton"/>
+            <Image Source="/ViewModels/logo.png" Width="200" Height="96"/>
+            <Border Background="White" Margin="10 20" Width="729" CornerRadius="5" HorizontalAlignment="Left">
+
+                <StackPanel Margin="15" DockPanel.Dock="Left"  >
+                    <StackPanel HorizontalAlignment="Center" >
+                        <TextBlock Text="Current repositories:"/>
+                        <TextBlock Name="Amount" />
+                        <DataGrid Name="Results" AutoGenerateColumns="false" Width="689" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"  ItemsSource="{Binding Path=dataTableData, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  >
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn  MaxWidth="100" Header="Repo name">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Path=name}"></TextBlock>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn  Header="Download">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="Download Repository" Tag="{Binding Path=id}" Click="DownloadRepo_Click"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="Repo link">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock x:Name="xd" Text="{Binding Path=url}"></TextBlock>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Button  Margin="15 10" Content="Show repository" Width="300" Click="ShowRepo_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </Grid>
+</Window>
