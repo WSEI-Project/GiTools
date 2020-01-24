@@ -6,15 +6,19 @@
         xmlns:local="clr-namespace:GiTools.Views"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d" Height="600" Width="400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None" Background="#FF410A66">
-    <Grid>
-        <StackPanel Margin="50">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="35"/>
+    </WindowChrome.WindowChrome>
+    <Grid x:Name="GridOfWindow" MouseLeftButtonDown="GridOfWindow_MouseLeftButtonDown">
+        <StackPanel WindowChrome.IsHitTestVisibleInChrome="True" Margin="50">
+            <Button Height="35" Width="35" Content="x" Padding="0" x:Name="CloseButton"/>
             <Image Source="/ViewModels/logo.png" Width="200" Height="96"/>
             <Border Background="White" Margin="10 20" CornerRadius="5">
                 <StackPanel Margin="25">
                     <StackPanel  HorizontalAlignment="Center">
                         <Button  Margin="15 10" Content="Create Repository" Click="BtnCreateRepo_Click"/>
-                        <Button  Margin="15 20" Content="Create Commit" />
                         <Button  Margin="15 10" Content="Search Repositories" Click="Search_Click"/>
+                        <Button  Margin="15 20" Content="Show user's repositories" Click="Show_Click" />
                     </StackPanel>
                 </StackPanel>
             </Border>

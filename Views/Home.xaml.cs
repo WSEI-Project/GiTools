@@ -26,28 +26,50 @@ namespace GiTools.Views
         [Dependency]
         public MainWindowViewModel ViewModel
         {
-        
+
             set { this.GitService = value._gitService; }
         }
         public Home(string token)
         {
             InitializeComponent();
             GitService = new GitService(token);
+            CloseButton.Click += (s, e) => Close();
+        }
+        #region Window: Moving
+
+        private void GridOfWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var move = sender as System.Windows.Controls.Grid;
+            var win = Window.GetWindow(move);
+            win.DragMove();
         }
 
-        
-        private void BtnCreateRepo_Click (object sender, RoutedEventArgs e)
+        #endregion
+
+        #region Window : ButtonCreate
+        private void BtnCreateRepo_Click(object sender, RoutedEventArgs e)
         {
             //tu jak widac przekazuje ten stworzony gitService do konstruktora widoku CreateRepo
             CreateRepo repo = new CreateRepo(GitService);
             repo.Show();
         }
+        #endregion
+
+        #region Window : ButtonShow
+        private void Show_Click(object sender, RoutedEventArgs e)
+        {
+            UserRepo user = new UserRepo(GitService);
+            user.Show();
+        }
+        #endregion
+
+        #region Button : Search
 
         private void Search_Click(object sender, RoutedEventArgs e)
         {
             SearchRepo searchRepo = new SearchRepo(GitService);
             searchRepo.Show();
         }
-
+        #endregion
     }
 }
