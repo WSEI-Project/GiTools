@@ -19,38 +19,41 @@
                     <StackPanel>
                         <TextBlock Text="Current repositories:"/>
                         <TextBlock Name="Amount" />
-                        <DataGrid Name="Results" AutoGenerateColumns="false" HorizontalAlignment="Left" Width="500" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"  ItemsSource="{Binding Path=dataTableData, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  >
-                            <DataGrid.Columns>
-                                <DataGridTemplateColumn  MaxWidth="100" Header="Repo name">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding Path=name}"></TextBlock>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTemplateColumn  Header="Download">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Button Content="Download" Tag="{Binding Path=id}" Click="DownloadRepo_Click"/>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTemplateColumn  Header="Contributors">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Button Content="Show" Tag="{Binding Path=id}" Click="ShowContributors_Click"/>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTemplateColumn Header="Repo link">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock x:Name="xd" Text="{Binding Path=url}"></TextBlock>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
+                        <ContentControl>
+                            <DataGrid MaxWidth="600" MaxHeight="600"  Name="Results" HorizontalAlignment="Center" Width="Auto"  ItemsSource="{Binding Path=dataTableData, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  >
+                                <DataGrid.Columns>
+                                    <DataGridTemplateColumn  MaxWidth="100" Header="Repo name">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Path=name}"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn  Header="Download">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Content="Download" Tag="{Binding Path=id}" Click="DownloadRepo_Click"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn  Header="Contributors">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Content="Show" Tag="{Binding Path=id}" Click="ShowContributors_Click"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Header="Repo link">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock x:Name="xd" Text="{Binding Path=url}"></TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </ContentControl>
+                       
                         <Button  Margin="15 10" Content="Show repositories" Width="300" Click="ShowRepo_Click"/>
                     </StackPanel>
                 </StackPanel>
