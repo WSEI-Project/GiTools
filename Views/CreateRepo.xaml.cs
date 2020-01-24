@@ -43,8 +43,20 @@ namespace GiTools.Views
                 MessageBox.Show("Repository name is empty");
             else
             {
-                long createdRepoId = await git.CreateRepo(RepoNameInputBox.Text, (bool)Private.IsChecked ? true : false);
-                MessageBox.Show(string.Format("Repository has beed created with id {0}", createdRepoId));
+                try
+                {
+                    long createdRepoId = await git.CreateRepo(RepoNameInputBox.Text, (bool)Private.IsChecked ? true : false);
+                    MessageBox.Show(string.Format("Repository has beed created with id {0}", createdRepoId));
+                }
+                catch(Octokit.ApiException ex)
+                {
+                    if(ex.Message == "Not Found")
+                    {
+                        MessageBox.Show($"Github has refused to create repository, perhaps you limited token abilities to create repositories?");
+                    }
+                    else MessageBox.Show($"Repository could not be saved due to error: {ex.Message}");
+                }
+               
             }
         }
         #endregion
