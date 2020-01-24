@@ -10,16 +10,16 @@
         <WindowChrome CaptionHeight="35"/>
     </WindowChrome.WindowChrome>
     <Grid x:Name="GridOfWindow" MouseLeftButtonDown="GridOfWindow_MouseLeftButtonDown">
-        <StackPanel WindowChrome.IsHitTestVisibleInChrome="True" Width="600" Margin="50">
+        <StackPanel WindowChrome.IsHitTestVisibleInChrome="True" Width="800" Margin="50">
             <Button Height="35" Width="35" Content="x" Padding="0" x:Name="CloseButton"/>
             <Image Source="/ViewModels/logo.png" Width="200" Height="96"/>
-            <Border Background="White" Margin="10 20" Width="729" CornerRadius="5" HorizontalAlignment="Left">
+            <Border Background="White" Margin="10 20" Width="700" CornerRadius="5" HorizontalAlignment="Left">
 
-                <StackPanel Margin="15" DockPanel.Dock="Left"  >
-                    <StackPanel HorizontalAlignment="Center" >
+                <StackPanel Margin="15" DockPanel.Dock="Left" Width="Auto"  >
+                    <StackPanel>
                         <TextBlock Text="Current repositories:"/>
                         <TextBlock Name="Amount" />
-                        <DataGrid Name="Results" AutoGenerateColumns="false" Width="689" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"  ItemsSource="{Binding Path=dataTableData, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  >
+                        <DataGrid Name="Results" AutoGenerateColumns="false" HorizontalAlignment="Left" Width="500" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"  ItemsSource="{Binding Path=dataTableData, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  >
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn  MaxWidth="100" Header="Repo name">
                                     <DataGridTemplateColumn.CellTemplate>
@@ -31,7 +31,14 @@
                                 <DataGridTemplateColumn  Header="Download">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Button Content="Download Repository" Tag="{Binding Path=id}" Click="DownloadRepo_Click"/>
+                                            <Button Content="Download" Tag="{Binding Path=id}" Click="DownloadRepo_Click"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn  Header="Contributors">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="Show" Tag="{Binding Path=id}" Click="ShowContributors_Click"/>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
@@ -42,10 +49,9 @@
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-
                             </DataGrid.Columns>
                         </DataGrid>
-                        <Button  Margin="15 10" Content="Show repository" Width="300" Click="ShowRepo_Click"/>
+                        <Button  Margin="15 10" Content="Show repositories" Width="300" Click="ShowRepo_Click"/>
                     </StackPanel>
                 </StackPanel>
             </Border>

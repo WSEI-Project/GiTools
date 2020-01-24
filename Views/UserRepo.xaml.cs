@@ -48,15 +48,17 @@ namespace GiTools.Views
         #region Window : Button
         private async void ShowRepo_Click(object sender, RoutedEventArgs e)
         {
+            
             var repoas = await git.GetUsersRepo();
             Amount.Text = repoas.Count.ToString();
             foreach (var item in repoas)
             {
                 var repo = new Repo();
                 repo.name = item.Name;
-                repo.url = item.HtmlUrl;
-                repo.id = item.Id;
+                repo.url = item.Url;
+                repo.id = item.Id;               
                 dataTableData.Add(repo);
+                
             }
             this.Results.ItemsSource = dataTableData;
         }
@@ -67,6 +69,21 @@ namespace GiTools.Views
             await git.DownloadRepo(long.Parse(myValue), "C:\\Projekty");
             MessageBox.Show("Repository has been downloaded");
         }
+       
+        private async void ShowContributors_Click(object sender, RoutedEventArgs e)
+        {
+            var myValue = ((Button)sender).Tag.ToString();
+            var com = await git.GetContributors(long.Parse(myValue));
+            
+            foreach (var name in com)
+            {
+                var con = new Contributor();
+                con.login = name.Login;
+                con.contributors = name.Contributions.ToString();
+                MessageBox.Show("Login: " + con.login + " Amount of contributors: " + con.contributors) ;
+            }
+        }
+        
         #endregion
 
         #region Repo Class
@@ -74,10 +91,20 @@ namespace GiTools.Views
         {
             public string name { get; set; }
             public string url { get; set; }
-            public long id { get; set; }
+            public long id { get; set; }           
         }
         #endregion
 
+        public class Contributor
+        {
+            public string login{ get; set; }
+            public string contributors { get; set; }
+        }
+
+        private void Results_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 
 }
