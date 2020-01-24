@@ -62,8 +62,7 @@ namespace GiTools.Views
                 try
                 {
                     System.IO.Directory.CreateDirectory(savingPath);
-                    await git.DownloadRepo(long.Parse(myValue), savingPath);
-                    MessageBox.Show($"Repository has been downloaded to {savingPath}");
+                    
                 }
                 catch(Exception ex)
                 {
@@ -71,7 +70,16 @@ namespace GiTools.Views
                 }
                 
             }
-  
+            try
+            {
+                await git.DownloadRepo(long.Parse(myValue), savingPath);
+                MessageBox.Show($"Repository has been downloaded to {savingPath}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Repository could not be saved due to error: {ex.Message}");
+            }
+
         }
        
         private async void ShowContributors_Click(object sender, RoutedEventArgs e)
