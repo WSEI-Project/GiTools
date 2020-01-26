@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GiTools", "GiTools.csproj",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GiToolsTests", "GiToolsTests\GiToolsTests.csproj", "{7B0C957D-1CA0-4DA7-9F1F-01F0AD58EC89}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup GiTools", "..\Setup\Setup.vdproj", "{8CF6AA3D-F9EB-4008-8B2A-6DAB9D6FCBEB}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup GiTools", "Setup\Setup.vdproj", "{8CF6AA3D-F9EB-4008-8B2A-6DAB9D6FCBEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
